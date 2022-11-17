@@ -18,7 +18,7 @@ const buttonClass = reactive({
 
 <template>
   <div
-    class="flex justify-center items-center rounded-full border border-2 border-white text-white aspect-square hover:opacity-60 cursor-pointer transition"
+    class="flex justify-center items-center rounded-full border border-2 border-white text-white aspect-square cursor-pointer transition active:scale-95"
     :class="buttonClass"
   >
     <font-awesome-icon
