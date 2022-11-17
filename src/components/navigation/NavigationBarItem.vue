@@ -13,13 +13,13 @@ const emit = defineEmits(["onNavigate"]);
 const props = defineProps<NavigationBarItem>();
 
 const buttonClass = computed(() => ({
-  "border-orange-400 bg-orange-400 text-gray-800": props.active,
+  "border-orange-400 bg-white text-gray-800": props.active,
 }));
 </script>
 
 <template>
   <div
-    class="text-xl mx-1 flex w-full h-full justify-center items-center rounded-lg text-white transition ease-in-out active:scale-95"
+    class="text-xl p-4 mx-1 flex w-full h-full justify-center items-center rounded-full text-white transition ease-in-out active:scale-95"
     :class="buttonClass"
     @click="emit('onNavigate')"
   >

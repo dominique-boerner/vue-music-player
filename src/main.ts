@@ -12,6 +12,7 @@ import {
   faRepeat,
   faHome,
   faMusic,
+  faSliders,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -23,6 +24,7 @@ const icons = [
   faRepeat,
   faHome,
   faMusic,
+  faSliders,
 ];
 
 icons.forEach((icon) => library.add(icon));
