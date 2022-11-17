@@ -3,7 +3,7 @@ import MusicPlayerButton from "@/components/music-player/MusicPlayerButton.vue";
 import MusicPlayerCover from "@/components/music-player/MusicPlayerCover.vue";
 import MusicPlayerSongTitle from "@/components/music-player/MusicPlayerSongTitle.vue";
 import MusicPlayerBandName from "@/components/music-player/MusicPlayerBandName.vue";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import linkingPark from "@/assets/music/Numb_Official_Music_Video_Linkin_Park.mp3";
 import MusicPlayerTimeline from "@/components/music-player/MusicPlayerTimeline.vue";
 
@@ -14,6 +14,7 @@ const isMusicPlayed = ref(false);
 const track = ref(new Audio(linkingPark));
 const timePlayed = ref(0);
 const songDuration = ref(0);
+const isRepeat = ref(false);
 
 track.value.ontimeupdate = () => {
   updateSongDuration();
@@ -28,6 +29,12 @@ function toggleIsMusicPlayed() {
   } else {
     track.value.pause();
   }
+}
+
+function toggleRepeat() {
+  isRepeat.value = !isRepeat.value;
+
+  track.value.loop = isRepeat.value;
 }
 
 function updateSongDuration() {
@@ -56,7 +63,7 @@ function setTimePlayed($event: any) {
       <MusicPlayerSongTitle title="Numb" />
       <MusicPlayerBandName title="Linkin Park" />
     </div>
-    <div class="flex flex-row justify-between items-center w-full my-10">
+    <div class="flex flex-row justify-between items-center w-full mt-10 mb-4">
       <MusicPlayerButton icon="fas fa-chevron-left" size="md" />
       <MusicPlayerButton
         @click="toggleIsMusicPlayed()"
@@ -70,6 +77,14 @@ function setTimePlayed($event: any) {
         :song-duration="songDuration"
         :time-played="timePlayed"
         @onDrag="setTimePlayed($event)"
+      />
+    </div>
+    <div class="flex">
+      <MusicPlayerButton
+        icon="fas fa-repeat"
+        size="sm"
+        :active="isRepeat"
+        @click="toggleRepeat()"
       />
     </div>
   </div>

@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { computed, reactive, toRef, toRefs } from "vue";
 
-export type ButtonSize = "md" | "lg";
+export type ButtonSize = "sm" | "md" | "lg";
 
 export interface Button {
   icon?: string;
   size?: ButtonSize;
+  active?: boolean;
 }
 
 const props = defineProps<Button>();
 
-const buttonClass = reactive({
+const active = computed(() => props.active);
+
+const buttonClass = computed(() => ({
+  "w-12 h-12": props.size === "sm",
   "w-16 h-16": props.size === "md",
   "w-20 h-20": props.size === "lg",
+  "bg-white text-gray-800": active.value === true,
+}));
+
+const iconClass = reactive({
+  text: props.size === "sm",
+  "text-2xl": props.size === "md" || props.size === "lg",
 });
 </script>
 
@@ -23,7 +33,7 @@ const buttonClass = reactive({
   >
     <font-awesome-icon
       v-if="props.icon"
-      class="text-2xl"
+      :class="iconClass"
       v-bind:icon="props.icon"
     ></font-awesome-icon>
   </div>
