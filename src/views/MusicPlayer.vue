@@ -3,15 +3,16 @@ import MusicPlayerButton from "@/components/music-player/MusicPlayerButton.vue";
 import MusicPlayerCover from "@/components/music-player/MusicPlayerCover.vue";
 import MusicPlayerSongTitle from "@/components/music-player/MusicPlayerSongTitle.vue";
 import MusicPlayerBandName from "@/components/music-player/MusicPlayerBandName.vue";
-import { ref } from "vue";
-import linkingPark from "@/assets/music/Numb_Official_Music_Video_Linkin_Park.mp3";
+import { computed, ref } from "vue";
 import MusicPlayerTimeline from "@/components/music-player/MusicPlayerTimeline.vue";
+import { technoTracks } from "@/assets/music/techno/techno";
 
-const img =
-  "https://www.soundandrecording.de/app/uploads/2017/07/Linkin-Park-Mix-Praxis.jpg";
-
+const musicIndex = ref(0);
 const isMusicPlayed = ref(false);
-const track = ref(new Audio(linkingPark));
+const track = computed(() => {
+  const audio = new Audio(technoTracks[musicIndex.value].audioSrc);
+  return audio;
+});
 const timePlayed = ref(0);
 const songDuration = ref(0);
 const isRepeat = ref(false);
@@ -33,7 +34,6 @@ function toggleIsMusicPlayed() {
 
 function toggleRepeat() {
   isRepeat.value = !isRepeat.value;
-
   track.value.loop = isRepeat.value;
 }
 
@@ -51,26 +51,64 @@ function setTimePlayed($event: any) {
   track.value.currentTime = value;
   timePlayed.value = value;
 }
+
+function prevSong() {
+  let newIndex = musicIndex.value - 1;
+
+  track.value.pause();
+  if (newIndex < 0) {
+    newIndex = technoTracks.length - 1;
+  }
+  musicIndex.value = newIndex;
+  track.value.play();
+}
+
+function nextSong() {
+  let newIndex = musicIndex.value + 1;
+
+  track.value.pause();
+  if (newIndex > technoTracks.length - 1) {
+    newIndex = 0;
+  }
+  musicIndex.value = newIndex;
+  track.value.play();
+}
+
+function getCurrentSongName() {
+  return technoTracks[musicIndex.value].name;
+}
+
+function getCurrentSongArtist() {
+  return technoTracks[musicIndex.value].artist;
+}
 </script>
 
 <template>
   <div class="flex flex-col justify-center items-center">
     <MusicPlayerCover
-      :img-src="img"
+      :img-src="technoTracks[musicIndex].imgSrc"
       :is-music-played="isMusicPlayed"
     ></MusicPlayerCover>
     <div class="flex flex-col justify-center items-center my-4">
-      <MusicPlayerSongTitle title="Numb" />
-      <MusicPlayerBandName title="Linkin Park" />
+      <MusicPlayerSongTitle :title="getCurrentSongName()" />
+      <MusicPlayerBandName :title="getCurrentSongArtist()" />
     </div>
     <div class="flex flex-row justify-between items-center w-full mt-10 mb-4">
-      <MusicPlayerButton icon="fas fa-chevron-left" size="md" />
+      <MusicPlayerButton
+        icon="fas fa-chevron-left"
+        size="md"
+        @click="prevSong()"
+      />
       <MusicPlayerButton
         @click="toggleIsMusicPlayed()"
         :icon="isMusicPlayed ? 'fas fa-pause' : 'fas fa-play'"
         size="lg"
       />
-      <MusicPlayerButton icon="fas fa-chevron-right" size="md" />
+      <MusicPlayerButton
+        icon="fas fa-chevron-right"
+        size="md"
+        @click="nextSong()"
+      />
     </div>
     <div class="flex justify-center items-center">
       <MusicPlayerTimeline
