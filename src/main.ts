@@ -10,10 +10,20 @@ import {
   faPlay,
   faPause,
   faRepeat,
+  faHome,
+  faMusic,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-const icons = [faChevronLeft, faChevronRight, faPlay, faPause, faRepeat];
+const icons = [
+  faChevronLeft,
+  faChevronRight,
+  faPlay,
+  faPause,
+  faRepeat,
+  faHome,
+  faMusic,
+];
 
 icons.forEach((icon) => library.add(icon));
 
