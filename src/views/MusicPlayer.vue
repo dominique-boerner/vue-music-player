@@ -3,10 +3,10 @@ import MusicPlayerButton from "@/components/music-player/MusicPlayerButton.vue";
 import MusicPlayerCover from "@/components/music-player/MusicPlayerCover.vue";
 import MusicPlayerSongTitle from "@/components/music-player/MusicPlayerSongTitle.vue";
 import MusicPlayerBandName from "@/components/music-player/MusicPlayerBandName.vue";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import linkingPark from "@/assets/music/Numb_Official_Music_Video_Linkin_Park.mp3";
-import { calculateMinutes, calculateSeconds } from "@/util/time-util";
-import { $ } from "vue/macros";
+import { formatSongTime } from "@/util/song-util";
+import MusicPlayerTimeline from "@/components/music-player/MusicPlayerTimeline.vue";
 
 const img =
   "https://www.soundandrecording.de/app/uploads/2017/07/Linkin-Park-Mix-Praxis.jpg";
@@ -17,7 +17,8 @@ const timePlayed = ref(0);
 const songDuration = ref(0);
 
 setInterval(() => {
-  calculateSongTimes();
+  updateSongDuration();
+  updateTimePlayed();
 }, 500);
 
 function toggleIsMusicPlayed() {
@@ -30,22 +31,12 @@ function toggleIsMusicPlayed() {
   }
 }
 
-function calculateSongTimes() {
+function updateSongDuration() {
   songDuration.value = track.value.duration;
-  timePlayed.value = track.value.currentTime;
 }
 
-function formatSongTime(time: number) {
-  const minutes = calculateMinutes(time);
-  const seconds = calculateSeconds(time);
-
-  let secondsString = "" + seconds;
-
-  if (seconds < 10) {
-    secondsString = `0${seconds}`;
-  }
-
-  return `${minutes}:${secondsString}`;
+function updateTimePlayed() {
+  timePlayed.value = track.value.currentTime;
 }
 
 function setTimePlayed($event: any) {
@@ -76,54 +67,11 @@ function setTimePlayed($event: any) {
       <MusicPlayerButton icon="fas fa-chevron-right" size="md" />
     </div>
     <div class="flex justify-center items-center">
-      <span class="text-white text-sm opacity-80 p-2">
-        {{ formatSongTime(timePlayed) }}
-      </span>
-      <input
-        v-bind:max="songDuration"
-        v-bind:value="timePlayed"
-        :style="{
-          'background-size': `${(timePlayed / songDuration) * 100}% 100%`,
-        }"
-        class="song-duration-slider"
-        type="range"
-        min="0"
-        @change="setTimePlayed($event)"
+      <MusicPlayerTimeline
+        :song-duration="songDuration"
+        :time-played="timePlayed"
+        @on-time-change="setTimePlayed($event)"
       />
-      <span class="text-white text-sm opacity-80 p-2">
-        {{ formatSongTime(songDuration) }}
-      </span>
     </div>
   </div>
 </template>
-
-<style scoped>
-input[type="range"] {
-  -webkit-appearance: none;
-  margin-right: 15px;
-  width: 200px;
-  height: 7px;
-  background: white;
-  border-radius: 5px;
-  background-image: linear-gradient(orange, orange);
-  background-repeat: no-repeat;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
-  box-shadow: none;
-  border: none;
-  background: transparent;
-}
-
-.song-duration-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background: orange;
-  cursor: ew-resize;
-  box-shadow: 0 0 2px 0 #555;
-  transition: background 0.3s ease-in-out;
-}
-</style>
