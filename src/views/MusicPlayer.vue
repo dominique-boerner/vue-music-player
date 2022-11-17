@@ -6,6 +6,7 @@ import MusicPlayerBandName from "@/components/music-player/MusicPlayerBandName.v
 import { reactive, ref } from "vue";
 import linkingPark from "@/assets/music/Numb_Official_Music_Video_Linkin_Park.mp3";
 import { calculateMinutes, calculateSeconds } from "@/util/time-util";
+import { $ } from "vue/macros";
 
 const img =
   "https://www.soundandrecording.de/app/uploads/2017/07/Linkin-Park-Mix-Praxis.jpg";
@@ -47,7 +48,9 @@ function formatSongTime(time: number) {
   return `${minutes}:${secondsString}`;
 }
 
-function setTimePlayed(value: number) {
+function setTimePlayed($event: any) {
+  const input = $event.target as HTMLInputElement;
+  const value = +input.value;
   track.value.currentTime = value;
   timePlayed.value = value;
 }
@@ -85,7 +88,7 @@ function setTimePlayed(value: number) {
         class="song-duration-slider"
         type="range"
         min="0"
-        @change="setTimePlayed($event.target.value)"
+        @change="setTimePlayed($event)"
       />
       <span class="text-white text-sm opacity-80 p-2">
         {{ formatSongTime(songDuration) }}

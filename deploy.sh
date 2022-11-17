@@ -24,3 +24,5 @@ git commit -m 'deploy'
 git push -f git@github.com:mukosoft/vue-music-player.git main:gh-pages
 
 cd -
+
+read
