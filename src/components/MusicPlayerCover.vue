@@ -12,8 +12,8 @@ const props = defineProps<MusicPlayerCover>();
 
 <template>
   <div
-    class="p-1 rounded-full"
-    :class="{ 'animation-spin-slow': props.isMusicPlayed }"
+    class="p-1 rounded-full animation-spin-slow"
+    :class="{ 'animate-paused': !props.isMusicPlayed }"
   >
     <img
       class="w-64 aspect-square rounded-full object-cover outline outline-offset-8 outline-white/90"
@@ -24,8 +24,17 @@ const props = defineProps<MusicPlayerCover>();
 </template>
 
 <style scoped>
+.animate-paused {
+  animation-play-state: paused;
+}
+
 .animation-spin-slow {
-  animation: spin 30s infinite linear;
+  animation-name: spin;
+  animation-duration: 30s;
+  animation-direction: normal;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
 }
 
 @keyframes spin {
