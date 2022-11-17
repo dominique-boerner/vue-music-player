@@ -2,11 +2,11 @@
 import { formatSongTime } from "@/util/song-util";
 
 export interface MusicPlayerTimeline {
-  timePlayed?: number;
-  songDuration?: number;
+  timePlayed: number;
+  songDuration: number;
 }
 
-const emit = defineEmits(["onTimeChange"]);
+const emit = defineEmits(["onDrag"]);
 
 const props = defineProps<MusicPlayerTimeline>();
 </script>
@@ -16,8 +16,8 @@ const props = defineProps<MusicPlayerTimeline>();
     {{ formatSongTime(props.timePlayed) }}
   </span>
   <input
-    v-bind:max="props.songDuration"
-    v-bind:value="props.timePlayed"
+    :max="props.songDuration"
+    :value="props.timePlayed"
     :style="{
       'background-size': `${
         (props.timePlayed / props.songDuration) * 100
@@ -26,7 +26,7 @@ const props = defineProps<MusicPlayerTimeline>();
     class="song-duration-slider"
     type="range"
     min="0"
-    @click="emit('onTimeChange', $event)"
+    @input="emit('onDrag', $event)"
   />
   <span class="text-white text-sm opacity-80 p-2">
     {{ formatSongTime(props.songDuration) }}

@@ -5,7 +5,6 @@ import MusicPlayerSongTitle from "@/components/music-player/MusicPlayerSongTitle
 import MusicPlayerBandName from "@/components/music-player/MusicPlayerBandName.vue";
 import { ref } from "vue";
 import linkingPark from "@/assets/music/Numb_Official_Music_Video_Linkin_Park.mp3";
-import { formatSongTime } from "@/util/song-util";
 import MusicPlayerTimeline from "@/components/music-player/MusicPlayerTimeline.vue";
 
 const img =
@@ -16,10 +15,10 @@ const track = ref(new Audio(linkingPark));
 const timePlayed = ref(0);
 const songDuration = ref(0);
 
-setInterval(() => {
+track.value.ontimeupdate = () => {
   updateSongDuration();
   updateTimePlayed();
-}, 500);
+};
 
 function toggleIsMusicPlayed() {
   isMusicPlayed.value = !isMusicPlayed.value;
@@ -50,8 +49,8 @@ function setTimePlayed($event: any) {
 <template>
   <div class="flex flex-col justify-center items-center">
     <MusicPlayerCover
-      v-bind:img-src="img"
-      v-bind:is-music-played="isMusicPlayed"
+      :img-src="img"
+      :is-music-played="isMusicPlayed"
     ></MusicPlayerCover>
     <div class="flex flex-col justify-center items-center my-4">
       <MusicPlayerSongTitle title="Numb" />
@@ -70,7 +69,7 @@ function setTimePlayed($event: any) {
       <MusicPlayerTimeline
         :song-duration="songDuration"
         :time-played="timePlayed"
-        @on-time-change="setTimePlayed($event)"
+        @onDrag="setTimePlayed($event)"
       />
     </div>
   </div>
