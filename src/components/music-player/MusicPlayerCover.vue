@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import MusicPlayerCover from "@/components/music-player/MusicPlayerCover.vue";
-import { reactive } from "vue";
 
 export interface MusicPlayerCover {
   imgSrc?: string;
   isMusicPlayed?: boolean;
 }
 
-const props = defineProps<MusicPlayerCover>();
+defineProps<MusicPlayerCover>();
 </script>
 
 <template>
   <div
     class="p-1 rounded-full animation-spin-slow"
-    :class="{ 'animate-paused': !props.isMusicPlayed }"
+    :class="{ 'animate-paused': !isMusicPlayed }"
   >
     <img
       class="w-64 aspect-square rounded-full object-cover outline outline-offset-8 outline-white/90"

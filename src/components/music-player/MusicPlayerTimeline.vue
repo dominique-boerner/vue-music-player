@@ -8,20 +8,18 @@ export interface MusicPlayerTimeline {
 
 const emit = defineEmits(["onDrag"]);
 
-const props = defineProps<MusicPlayerTimeline>();
+defineProps<MusicPlayerTimeline>();
 </script>
 
 <template>
   <span class="text-white text-sm opacity-80 p-2">
-    {{ formatSongTime(props.timePlayed) }}
+    {{ formatSongTime(timePlayed) }}
   </span>
   <input
-    :max="props.songDuration"
-    :value="props.timePlayed"
+    :max="songDuration"
+    :value="timePlayed"
     :style="{
-      'background-size': `${
-        (props.timePlayed / props.songDuration) * 100
-      }% 100%`,
+      'background-size': `${(timePlayed / songDuration) * 100}% 100%`,
     }"
     class="song-duration-slider"
     type="range"
@@ -29,7 +27,7 @@ const props = defineProps<MusicPlayerTimeline>();
     @input="emit('onDrag', $event)"
   />
   <span class="text-white text-sm opacity-80 p-2">
-    {{ formatSongTime(props.songDuration) }}
+    {{ formatSongTime(songDuration) }}
   </span>
 </template>
 

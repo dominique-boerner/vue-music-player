@@ -3,8 +3,7 @@ export interface MusicPlayerBandName {
   title?: string;
 }
 
-const props = defineProps<MusicPlayerBandName>();
-const title = props.title;
+defineProps<MusicPlayerBandName>();
 </script>
 
 <template>

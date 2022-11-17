@@ -3,7 +3,7 @@ import MusicPlayerButton from "@/components/music-player/MusicPlayerButton.vue";
 import MusicPlayerCover from "@/components/music-player/MusicPlayerCover.vue";
 import MusicPlayerSongTitle from "@/components/music-player/MusicPlayerSongTitle.vue";
 import MusicPlayerBandName from "@/components/music-player/MusicPlayerBandName.vue";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import linkingPark from "@/assets/music/Numb_Official_Music_Video_Linkin_Park.mp3";
 import MusicPlayerTimeline from "@/components/music-player/MusicPlayerTimeline.vue";
 

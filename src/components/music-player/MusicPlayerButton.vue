@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, toRef, toRefs } from "vue";
+import { computed, reactive } from "vue";
 
 export type ButtonSize = "sm" | "md" | "lg";
 
