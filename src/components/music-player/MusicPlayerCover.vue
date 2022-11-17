@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MusicPlayerCover from "@/components/MusicPlayerCover.vue";
+import MusicPlayerCover from "@/components/music-player/MusicPlayerCover.vue";
 import { reactive } from "vue";
 
 export interface MusicPlayerCover {
