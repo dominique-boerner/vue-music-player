@@ -5,5 +5,11 @@
 * {
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    
+
+}
+
+@layer components {
+    button {
+        @apply flex justify-center items-center bg-gray-800 px-4 text-white rounded-md border border-orange-500/30;
+    }
 }

@@ -4,3 +4,8 @@ export interface Track {
   name: string;
   artist: string;
 }
+
+export interface TrackDto {
+  name: string;
+  url: string;
+}
